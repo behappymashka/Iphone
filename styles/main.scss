@@ -253,7 +253,7 @@ body {
     font-weight: bold;
 
     &:hover {
-      box-shadow: 0 0 10px rgb(238, 237, 237);
+      box-shadow: 0 0 10px #c800ff;
       border-color: #0A0A0A;
       transition: box-shadow 0.3s ease;
     }
@@ -264,6 +264,10 @@ body {
   border-color: #fff;
   outline: none;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+.contacts-input._error {
+
+  box-shadow: 0 0 10px #c800ff;
 }
 
 .footer {
