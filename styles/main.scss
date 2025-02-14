@@ -19,7 +19,16 @@ body {
   transition: overflow 0.3s ease;
 
 }
-
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* затемняем фон */
+  z-index: 9999; /* чтобы overlay был поверх всех элементов */
+  display: none; /* скрываем по умолчанию */
+}
 .header {
   background-color: #0A0A0A;
   padding: 33px 0 32px;

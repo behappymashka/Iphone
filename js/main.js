@@ -2,6 +2,8 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("form");
+    const overlay = document.getElementById("overlay");
+
     form.addEventListener('submit', formSend);
 
     async function formSend(e) {
@@ -11,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let formData = new FormData(form);
 
         if (error === 0) {
+            overlay.style.display = 'block';
             try {
                 let response = await fetch(form.action, {
                     method: "POST",
@@ -27,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Ошибка соединения. Проверьте интернет-соединение.");
                 console.error("Ошибка:", err);
             }
+            overlay.style.display = 'none';
         } else {
             alert('Заполните обязательные поля');
         }
@@ -44,6 +48,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     formAddError(input);
                     error++;
                 }
+            } else if (input.classList.contains('_phone')) {
+                if (!phoneTest(input.value)) {
+                    formAddError(input);
+                    error++;
+                }
+
             } else if (input.value.trim() === '') {
                 formAddError(input);
                 error++;
@@ -64,6 +74,26 @@ document.addEventListener("DOMContentLoaded", function () {
     function emailTest(input) {
         return !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(input.value);
     }
+
+    function phoneTest(value) {
+        let phonePattern = /^\+380\d{9}$/;
+        return phonePattern.test(value.trim());
+    }
+
+
+    const phoneInput = document.querySelector('input[name="number"]');
+    phoneInput.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^\d+]/g, '');
+
+        if (!this.value.startsWith('+380')) {
+            this.value = '+380' + this.value.replace(/[^\d]/g, '');
+        }
+
+        if (this.value.length > 13) {
+            this.value = this.value.slice(0, 13);
+        }
+    });
+    phoneInput.value = '+380';
 });
 
 
